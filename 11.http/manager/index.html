@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="h3 text-center text-danger">添加用户</div>
+            <form role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="username" class="control-label col-md-2">姓名</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="username" placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label col-md-2">密码</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button class="btn btn-primary" type="button" onclick="add()">添加</button>
+                    </div>
+                </div>
+            </form>
+            <!--用户信息展示-->
+            <ul class="list-group">
+                <li class="list-group-item col-md-offset-2 col-md-10">
+                    <span>姓名：</span>
+                    <span>密码：</span>
+                    <button class="btn btn-danger btn-xs pull-right">删除</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    var xhr=new XMLHttpRequest();
+    xhr.open('GET','/getUser',true);
+    xhr.responseType='json';//h5的属性，把服务器返回的数据转为json类型
+    var oUl=document.querySelector('.list-group');
+    function showlist(data) {
+        var str ='';
+        data.forEach(function (item) {
+            str += `<li class="list-group-item col-md-offset-2 col-md-10">
+                    <span>姓名：${item.userName}</span>
+                    <span>密码：${item.passWord}</span>
+                    <button class="btn btn-danger btn-xs pull-right" onclick="del(${item.id})">删除</button>
+                </li>`
+        });
+        oUl.innerHTML = str;
+    }
+    xhr.onload=function () {
+        var data = xhr.response;
+        showlist(data);
+    }
+    xhr.send()
+//    删除用户by id
+    function del(id) {
+//        console.log(id);
+        var xhr=new XMLHttpRequest();
+        xhr.open('DELETE','/deleteUser?id='+id,true);
+        xhr.responseType='json';
+        xhr.onload=function () {
+            var data = xhr.response;
+            showlist(data);
+        };
+        xhr.send();
+    }
+    function add() {
+
+    }
+</script>
+</body>
+</html>

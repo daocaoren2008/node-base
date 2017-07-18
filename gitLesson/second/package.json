@@ -1,0 +1,18 @@
+{
+  "name": "wq_second",
+  "version": "1.0.0",
+  "description": "",
+  "main": "2.global.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.1.1"
+  },
+  "devDependencies": {
+    "jquery": "^3.1.1"
+  }
+}
